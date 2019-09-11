@@ -2,7 +2,7 @@ import Axios from 'axios'
 
 
 export const forecastAxios = Axios.create({
-    baseURL:'http://dataservice.accuweather.com/'
+    baseURL:'https://dataservice.accuweather.com/'
 })
 
 forecastAxios.interceptors.response.use(res => res,error => {
