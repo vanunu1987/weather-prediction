@@ -24,7 +24,7 @@ class Main extends Component {
         await this.props.onFavoritesLoad()
         let {favoriteCities} = this.props
         let cityObj = this.props.match.params.key && favoriteCities[this.props.match.params.key]
-        let prmObj = cityObj && {Key:cityObj.id, Name:cityObj.name}
+        let prmObj = cityObj && {Key:cityObj.id, name:cityObj.name}
         if (!curLocation && !loadLocation) await this.props.onForecastLoad(this.state.defultLoc) 
         else if (this.props.match.params.key) this.props.onLocationByKey(prmObj)
         else if (loadLocation) await this.props.onForecastLoad({key:loadLocation[0].Key,name:loadLocation[0].LocalizedName})
@@ -51,7 +51,7 @@ class Main extends Component {
      }
 
      handleListClicked = (cityObj)=>{
-        let obj = {Key:cityObj.Key, Name:cityObj.Country.LocalizedName}
+        let obj = {Key:cityObj.Key, name:cityObj.LocalizedName}
         this.props.onDropdownChange(false)
         this.props.onLocationByKey(obj)
 

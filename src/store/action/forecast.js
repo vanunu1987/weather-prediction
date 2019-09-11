@@ -77,7 +77,7 @@ export const setErrorHandle = (err) =>{
                     dispatch(set5DaysForecast(daysForecast))
                     let currForecast = await forecastService.getCurrentForecast(cityObj.Key)
                     dispatch(setForecast(currForecast))
-                    let locationArr = await forecastService.getLocKey(cityObj.Name)
+                    let locationArr = await forecastService.getLocKey(cityObj.name)
                     dispatch(setLocKey(locationArr))
             }
             catch (error){
