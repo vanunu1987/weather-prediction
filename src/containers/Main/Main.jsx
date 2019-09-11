@@ -22,8 +22,11 @@ class Main extends Component {
         let { curLocation } = this.props
         let loadLocation = utilService.loadFromStorage('currLoc')
         await this.props.onFavoritesLoad()
+        let {favoriteCities} = this.props
+        let cityObj = this.props.match.params.key && favoriteCities[this.props.match.params.key]
+        let prmObj = cityObj && {Key:cityObj.id, Name:cityObj.name}
         if (!curLocation && !loadLocation) await this.props.onForecastLoad(this.state.defultLoc) 
-        else if (this.props.match.params.key) this.props.onLocationByKey(JSON.parse(this.props.match.params.key))
+        else if (this.props.match.params.key) this.props.onLocationByKey(prmObj)
         else if (loadLocation) await this.props.onForecastLoad({key:loadLocation[0].Key,name:loadLocation[0].LocalizedName})
         let isDayTime = this.props.currForecast&&this.props.currForecast.IsDayTime
         this.setState({isDayTime})

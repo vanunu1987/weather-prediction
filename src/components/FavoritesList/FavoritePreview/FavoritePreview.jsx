@@ -16,7 +16,7 @@ class  FavoritePreview  extends Component {
         }
         return(
             <div className={classes['preview-container']}
-            onClick={()=>this.props.history.push(`/{"Key":"${root.id}", "Name":"${root.name}"}`)}>
+            onClick={()=>this.props.history.push(`/${root.id}`)}>
                 <h1>{root.name}</h1>
                 <p className={classes['date']}>{moment(root.currForecast.LocalObservationDateTime).format('MMM Do, h:mm a')}</p>
                 <div style={style} className={classes['icon-img']}></div>
