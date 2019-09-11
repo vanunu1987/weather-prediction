@@ -1,0 +1,33 @@
+
+.day-container{
+display: flex;
+justify-content: flex-start;
+align-items: center;
+border-radius: 5px;
+color: #5d5d5d;
+text-align: left;
+
+
+h1,h2,p,div{
+    padding: 0px;
+    margin: 0px;
+}
+h1{
+    min-width: 95px;
+    margin-left: 25px;
+}
+
+p{
+    font-size: 1.5rem;
+}
+}
+
+.icon-img{
+    height: 65px;
+    width: 65px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 25px;
+}
+

@@ -1,0 +1,38 @@
+.days-container{
+    width: 450px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ul{
+        display: grid;
+        grid-template-columns: 1fr;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        height: 300px;
+
+        li{
+            margin-left: 5px;
+        }
+
+    }
+
+}
+
+@media (max-width:1000px){
+
+    .days-container{
+            height:400px;
+            height: 340px;
+    }
+
+}
+
+@media (max-width:550px){
+
+    .days-container{
+            width: 350px;
+    }
+
+}

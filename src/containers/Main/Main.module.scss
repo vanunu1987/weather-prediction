@@ -1,0 +1,40 @@
+
+.main-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85%;
+}
+
+.main-layout{
+    display: flex;
+    flex-direction: column;
+}
+.content-container{
+    width: 900px;
+    height: 400px;
+    display: flex;
+}
+
+
+@media (max-width:1000px){
+    .content-container{
+        flex-direction: column;
+        width: 450px;
+        height: 540px;
+    }
+
+    .main-layout{
+        justify-content: center;
+        align-items: center;
+
+    }
+}
+
+@media (max-width:550px){
+    .content-container{
+        width: 350px;
+    }
+
+    
+}

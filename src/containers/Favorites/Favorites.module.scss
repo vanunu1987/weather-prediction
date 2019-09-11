@@ -1,0 +1,48 @@
+
+
+.favorite-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 85%;
+
+    .content-container{
+        width: 900px;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        background-color: #ffffffcc;
+    }
+}
+
+.title{
+    font-family: 'Yellowtail', cursive;
+    color: #323337;
+    h1{
+        font-size: 3rem;
+    }
+}
+
+
+@media (max-width:1000px){
+    .favorite-container{
+
+        .content-container{
+            align-items: flex-start;
+            width: 400px;
+            height: 650px;
+        }
+    }
+}
+
+@media (max-width:550px){
+    .favorite-container{
+
+        .content-container{
+
+            width: 350px;
+            height: 650px;
+        }
+    }
+}

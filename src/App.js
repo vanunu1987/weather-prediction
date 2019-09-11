@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { connect } from 'react-redux';
 import './App.css';
 
-function App() {
+import Main from './containers/Main/Main'
+import Favorites from './containers/Favorites/Favorites'
+import Header from './components/Header/Header'
+import Toast from './components/UI/Toast/Toast'
+import classes from './App.module.scss'
+
+
+const App = (props)=> {
+  let errorToast = (props.isError)? <Toast err={props.isError} />:''
+  let imgClass = (props.currForecast && props.currForecast.IsDayTime)?
+   `${classes['App']}`: `${classes['App']} ${classes['night']}`
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={imgClass}>
+      <BrowserRouter>
+      <Header/>
+      {errorToast}
+        <Switch>
+          <Route exact path="/" component={Main}/>
+          <Route exact path="/favorites" component={Favorites}/>
+          <Route path="/:key" component={Main}/>
+        </Switch>
+      </BrowserRouter>
+
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isError: state.forecast.isError,
+    currForecast: state.forecast.currForecast,
+  }
+}
+
+export default connect(mapStateToProps,null)(App) ;

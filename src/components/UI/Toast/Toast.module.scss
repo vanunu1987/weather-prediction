@@ -1,0 +1,35 @@
+
+
+.toast-container{
+    width: 350px;
+    height: 80px;
+    background-color: #ffffffcc;
+    color: #db5858;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    top:20px;
+    margin-left: -175px;
+    animation: toastTran 1.5s;
+    
+   
+    h1{
+        padding: 0;
+        margin: 0;
+        font-size: 1rem;
+    }
+}
+
+
+@keyframes toastTran {
+    from {
+        transform: translateY(-100%);
+    }
+  
+    to {
+        transform: translateY(0%);
+    }
+  }
