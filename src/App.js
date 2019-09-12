@@ -23,7 +23,7 @@ const App = (props)=> {
         <Switch>
           <Route exact path="/" component={Main}/>
           <Route exact path="/favorites" component={Favorites}/>
-          <Route path="/:key" component={Main}/>
+          <Route path="/:key?" component={Main}/>
         </Switch>
       </BrowserRouter>
 
