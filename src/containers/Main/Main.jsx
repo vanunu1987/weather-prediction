@@ -11,7 +11,7 @@ import classes from './Main.module.scss'
 
 class Main extends Component {
     state = { 
-        defultLoc: {key:215854,name:'tel aviv'},
+        defultLoc: {key:"215854",name:'tel aviv'},
         isDayTime: true,
         inputText:'',
         isDropdown: false
