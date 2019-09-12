@@ -7,7 +7,7 @@ const toast = (props) =>{
     
     let errMsg = props.err.toString().substring(13,props.length);
 
-    setInterval(()=>{
+    setTimeout(()=>{
         props.onCloseToast(false)
     },4000)
     
