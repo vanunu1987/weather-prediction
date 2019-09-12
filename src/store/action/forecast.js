@@ -1,21 +1,22 @@
 import forecastService from '../../services/forecastService'
+import utilService from '../../services/utilService'
 import * as actionTypes from '../action/actionTyps'
 
 // Action creator
 
-const setForecast = (forecast)=>{
+export const setForecast = (forecast)=>{
     return {
         type: actionTypes.SET_FORECAST,
         forecast
     }
 }
-const set5DaysForecast = (daysForecast)=>{
+export const set5DaysForecast = (daysForecast)=>{
     return {
         type: actionTypes.SET_5DAYSFORECAST,
         daysForecast
     }
 }
-const setLocKey = (locKey)=>{
+export const setLocKey = (locKey)=>{
     return {
         type: actionTypes.SET_LOCKEY,
         locKey
@@ -54,14 +55,17 @@ export const setErrorHandle = (err) =>{
             try {
                 let locationArr = await forecastService.getLocKey(location.name)
                 dispatch(setLocKey(locationArr))
-                if (locationArr.length>1){
+                utilService.saveToStorage('currLoc',locationArr)
+                if (locationArr.length>1 && !location.key ){
                     dispatch(setIsDropdown(true))
                 }else {
                     location.key= locationArr[0].Key
                     let daysForecast = await forecastService.get5DaysForecast(location.key)
                     dispatch(set5DaysForecast(daysForecast))
+                    utilService.saveToStorage('daysForecast',daysForecast)
                     let currForecast = await forecastService.getCurrentForecast(location.key)
                     dispatch(setForecast(currForecast))
+                    utilService.saveToStorage('currForecast',currForecast)
                 }
             }
             catch (error){
@@ -75,10 +79,13 @@ export const setErrorHandle = (err) =>{
             try {
                     let daysForecast = await forecastService.get5DaysForecast(cityObj.Key)
                     dispatch(set5DaysForecast(daysForecast))
+                    utilService.saveToStorage('daysForecast',daysForecast)
                     let currForecast = await forecastService.getCurrentForecast(cityObj.Key)
                     dispatch(setForecast(currForecast))
+                    utilService.saveToStorage('currForecast',currForecast)
                     let locationArr = await forecastService.getLocKey(cityObj.name)
                     dispatch(setLocKey(locationArr))
+                    utilService.saveToStorage('currLoc',locationArr)
             }
             catch (error){
                 dispatch(setErrorHandle(error))
@@ -86,31 +93,6 @@ export const setErrorHandle = (err) =>{
         }
 
 }
-export const  getLocKey =  locName =>{
-        return async (dispatch) =>{
-            try {
-                let locKey = await forecastService.getLocKey(locName)
-                dispatch(setLocKey(locKey))
-            }
-            catch (error){
-                dispatch(setErrorHandle(error))
-            }
-        }
-
-}
-export const  getCurrForecastByKey =  cityObj =>{
-        return async (dispatch) =>{
-            try {
-                let currForecast = await forecastService.getCurrentForecast(cityObj.id)
-                dispatch(setForecast(currForecast))
-            }
-            catch (error){
-                dispatch(setErrorHandle(error))
-            }
-        }
-
-}
-
 
 
 

@@ -19,15 +19,22 @@ class Main extends Component {
      }
 
      async componentDidMount(){
-        let { curLocation } = this.props
         let loadLocation = utilService.loadFromStorage('currLoc')
-        await this.props.onFavoritesLoad()
+        await this.props.onSetCurrLoc(loadLocation)
+        let loadFavorites = utilService.loadFromStorage('favorites')
+        await this.props.onSetFavoriteCity(loadFavorites)
+        let loadForecast = utilService.loadFromStorage('currForecast')
+        await this.props.onSetCurrforecast(loadForecast)
+        let loadDaysForecast = utilService.loadFromStorage('daysForecast')
+        await this.props.onSetDaysforecast(loadDaysForecast)
+        if (!loadFavorites) await this.props.onFavoritesLoad()
         let {favoriteCities} = this.props
+        let { curLocation } = this.props
         let cityObj = this.props.match.params.key && favoriteCities[this.props.match.params.key]
         let prmObj = cityObj && {Key:cityObj.id, name:cityObj.name}
         if (!curLocation && !loadLocation) await this.props.onForecastLoad(this.state.defultLoc) 
         else if (this.props.match.params.key) this.props.onLocationByKey(prmObj)
-        else if (loadLocation) await this.props.onForecastLoad({key:loadLocation[0].Key,name:loadLocation[0].LocalizedName})
+        else if (!curLocation &&loadLocation) await this.props.onForecastLoad({key:loadLocation[0].Key,name:loadLocation[0].LocalizedName})
         let isDayTime = this.props.currForecast&&this.props.currForecast.IsDayTime
         this.setState({isDayTime})
      }
@@ -104,12 +111,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLocationChoose: (locatoinName)=> dispatch(forecastActions.getLocKey(locatoinName)),
         onLocationByKey: (cityObj)=> dispatch(forecastActions.getForecastByKey(cityObj)),
         onForecastLoad: (location)=> dispatch(forecastActions.getForecast(location)),
         onDropdownChange: (val)=> dispatch(forecastActions.setIsDropdown(val)),
         onCityListChange: (cities)=> dispatch(forecastActions.setCityList(cities)),
+        onSetCurrLoc: (corLoc)=> dispatch(forecastActions.setLocKey(corLoc)),
+        onSetCurrforecast: (curForecast)=> dispatch(forecastActions.setForecast(curForecast)),
+        onSetDaysforecast: (daysForecast)=> dispatch(forecastActions.set5DaysForecast(daysForecast)),
         onFavoriteCity: (citiesObj)=>dispatch(favoritesActions.setFavoriteCities(citiesObj)),
+        onSetFavoriteCity: (citiesObj)=>dispatch(favoritesActions.setFavorite(citiesObj)),
         onFavoritesLoad: ()=> dispatch(favoritesActions.loadFavorites()),
     }
 }
