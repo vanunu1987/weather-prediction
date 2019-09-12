@@ -5,7 +5,8 @@ import forecastService from '../services/forecastService'
 
 const saveFavorite = (payload)=>{
     if (payload.currLoc.length) payload.currLoc = payload.currLoc[0]
-    let favoritesCities = (!utilService.loadFromStorage('favorites'))?{}:utilService.loadFromStorage('favorites')
+    let favoritesCities = (!utilService.loadFromStorage('favorites')) ? {} :
+    utilService.loadFromStorage('favorites')
     let val= (favoritesCities[payload.currLoc.Key]) ? false :
     {id:payload.currLoc.Key,name:payload.currLoc.LocalizedName,currForecast:payload.cityObj}
     favoritesCities = {...favoritesCities,[payload.currLoc.Key]: val}

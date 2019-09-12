@@ -1,7 +1,7 @@
 import React from 'react' 
 import classes from './SearchBar.module.scss'
 const searchBar = (props) =>{
-    let dropclass = (props.isDropdownState) ? 
+    let dropclass = (props.isDropdown) ? 
     `${classes['drop']} ${classes['open']}`: `${classes['drop']}`
     let dropdown = props.isDropdown && props.currCityList && props.currCityList
     .map(cityObj=><li key={cityObj.Key}

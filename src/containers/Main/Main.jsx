@@ -12,13 +12,22 @@ import classes from './Main.module.scss'
 class Main extends Component {
     state = { 
         defultLoc: {key:"215854",name:'tel aviv'},
-        isDayTime: true,
         inputText:'',
-        isDropdown: false
-
      }
 
      async componentDidMount(){
+        await this.intLoad()
+        let {favoriteCities} = this.props
+        let { curLocation } = this.props
+        let keyParm = this.props.match.params.key
+        if (!favoriteCities) await this.props.onFavoritesLoad()
+        let cityObj = keyParm && favoriteCities[keyParm]
+        let parmObj = cityObj && {Key:cityObj.id, name:cityObj.name}
+        if (!curLocation) await this.props.onForecastLoad(this.state.defultLoc) 
+        else if (keyParm) this.props.onLocationByKey(parmObj)
+     }
+    
+     intLoad = async () =>{
         let loadLocation = utilService.loadFromStorage('currLoc')
         await this.props.onSetCurrLoc(loadLocation)
         let loadFavorites = utilService.loadFromStorage('favorites')
@@ -27,16 +36,6 @@ class Main extends Component {
         await this.props.onSetCurrforecast(loadForecast)
         let loadDaysForecast = utilService.loadFromStorage('daysForecast')
         await this.props.onSetDaysforecast(loadDaysForecast)
-        if (!loadFavorites) await this.props.onFavoritesLoad()
-        let {favoriteCities} = this.props
-        let { curLocation } = this.props
-        let cityObj = this.props.match.params.key && favoriteCities[this.props.match.params.key]
-        let prmObj = cityObj && {Key:cityObj.id, name:cityObj.name}
-        if (!curLocation && !loadLocation) await this.props.onForecastLoad(this.state.defultLoc) 
-        else if (this.props.match.params.key) this.props.onLocationByKey(prmObj)
-        else if (!curLocation &&loadLocation) await this.props.onForecastLoad({key:loadLocation[0].Key,name:loadLocation[0].LocalizedName})
-        let isDayTime = this.props.currForecast&&this.props.currForecast.IsDayTime
-        this.setState({isDayTime})
      }
 
      handleChange = (ev) =>{
@@ -79,7 +78,6 @@ class Main extends Component {
               <SearchBar inputChange={this.handleChange}
               inputText={this.state.inputText}
               search={this.handleSearch}
-              isDropdownState={this.state.isDropdown}
               isDropdown={this.props.isDropdown}
               currCityList={this.props.curLocation}
               listClicked={this.handleListClicked}/>
@@ -89,7 +87,6 @@ class Main extends Component {
                 toggleFavorite={this.handleSaveToFavorite}
                 favoriteList={this.props.favoriteCities}/>
                 <DaysForecasting daysToForecast={daysForecast}
-                isDayTime={this.state.isDayTime}
                 currForecast={this.props.currForecast}/>
               </div>
             </div>

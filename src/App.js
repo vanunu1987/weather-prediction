@@ -14,9 +14,12 @@ const App = (props)=> {
   let errorToast = (props.isError)? <Toast err={props.isError} />:''
   let imgClass = (props.currForecast && props.currForecast.IsDayTime)?
    `${classes['App']}`: `${classes['App']} ${classes['night']}`
+  let wraperClass = (props.currForecast && props.currForecast.IsDayTime)?
+   `${classes['wraper']} ${classes['close']}`: `${classes['wraper']} ${classes['open']}`
   
   return (
     <div className={imgClass}>
+      <div className={wraperClass}>
       <BrowserRouter>
       <Header/>
       {errorToast}
@@ -26,7 +29,7 @@ const App = (props)=> {
           <Route path="/:key?" component={Main}/>
         </Switch>
       </BrowserRouter>
-
+      </div>
     </div>
   );
 }
