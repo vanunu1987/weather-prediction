@@ -20,7 +20,7 @@ class Main extends Component {
         let {favoriteCities} = this.props
         let { curLocation } = this.props
         let keyParm = this.props.match.params.key
-        if (!favoriteCities) await this.props.onFavoritesLoad()
+        if (!favoriteCities) await this.props.onFavoritesDefultLoad()
         let cityObj = keyParm && favoriteCities[keyParm]
         let parmObj = cityObj && {Key:cityObj.id, name:cityObj.name}
         if (!curLocation) await this.props.onForecastLoad(this.state.defultLoc) 
@@ -118,6 +118,7 @@ const mapDispatchToProps = dispatch => {
         onFavoriteCity: (citiesObj)=>dispatch(favoritesActions.setFavoriteCities(citiesObj)),
         onSetFavoriteCity: (citiesObj)=>dispatch(favoritesActions.setFavorite(citiesObj)),
         onFavoritesLoad: ()=> dispatch(favoritesActions.loadFavorites()),
+        onFavoritesDefultLoad: ()=> dispatch(favoritesActions.loadDefultFavorites()),
     }
 }
 
